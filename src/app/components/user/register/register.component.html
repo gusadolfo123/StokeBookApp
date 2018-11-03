@@ -1,0 +1,33 @@
+<section id="register">
+  <div class="container">
+    <div class="row justify-content-center align-content-center ml-2 mr-2">
+      <div class="col-md-6 mb-4 mt-5 pl-2 pr-2 pb-2 pt-2 register text-dark bg-light">
+        <h1 class="text-center mt-2 mb-4">Crear Cuenta</h1>
+        <form #formRegister="ngForm" (ngSubmit)="onRegister()">
+          <div class="form-group">
+            <input [(ngModel)]="user.username" name="username" type="text" class="form-control" id="username"
+              placeholder="Nombre">
+          </div>
+          <div class="form-group">
+            <input [(ngModel)]="user.email" name="email" type="email" class="form-control" id="email" placeholder="email">
+          </div>
+          <div class="form-group">
+            <input [(ngModel)]="user.password" name="password" type="password" class="form-control" id="password"
+              placeholder="password">
+          </div>
+          <small id="emailHelp" class="form-text text-dark">Al registrarse, usted acepta nuestros
+            <a href="" class="alert-link">Terminos de Servicio</a> y <a href="" class="alert-link">Politica
+              de
+              Privacidad</a>
+          </small>
+
+          <button type="submit" class="btn col-12 mt-2 mb-2 btn-primary">Registrarse</button>
+
+          <a class="btn col-12 mt-2 mb-2 btn-primary" routerLink="/user/login">
+            <span>Ya tienes una cuenta?</span>
+          </a>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

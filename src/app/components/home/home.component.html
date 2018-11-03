@@ -1,0 +1,27 @@
+<div id="books">
+  <div class="container">
+    <h2 class="text-center"> List Books </h2>
+    <div class="row">
+      <div *ngFor="let book of books" class="col-xs-12 col-sm-6 col-md-4">
+        <div class="card_book">
+          <div class="card">
+            <div class="card-body text-center">
+              <p>
+                <img class="img-fluid" src="{{ book.portada }}" alt="{{ book.titulo }}">
+              </p>
+              <h4 routerLink="/books/{{book.id}}" class="card-title">{{ book.titulo }}</h4>
+              <p class="card-text">
+                {{ book.descripcion | truncateText: 20 }}
+              </p>
+              <div class="container-precio-idioma">
+                <p class="badge badge-info">{{ book.precio }}$</p>
+                <p class="badge badge-info">{{ book.idioma }}</p>
+              </div>
+              <a href="{{ book.link_amazon }}" target="_blank" class="btn btn-block btn-outline-primary">Buy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row justify-content-center align-content-center ml-2 mr-2">
+    <div class="col-md-6 mb-4 mt-5 pl-2 pr-2 pb-2 pt-2 login text-dark bg-light">
+      <h1 class="text-center mt-2 mb-4">Ingreso</h1>
+      <form #formLogin="ngForm" (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <input [(ngModel)]="user.email" name="email" type="email" class="form-control" id="email" placeholder="Correo">
+        </div>
+        <div class="form-group">
+          <input [(ngModel)]="user.password" name="password" type="password" class="form-control" id="password"
+            placeholder="Contraseña">
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="recordarme">
+          <label class="form-check-label" for="recordarme">Recordarme</label>
+        </div>
+        <button type="submit" class="btn col-12 login-btn mt-2 mb-2 btn-primary">Ingresar</button>
+        <a class="btn col-12 login-btn mt-2 mb-2 pr-2 pl-2 btn-primary" routerLink="/user/register">¿Necesitas una
+          Cuenta?</a>
+        <button class="btn col-12 login-btn mt-2 mb-2 pr-2 pl-2 btn-primary"><i class="fab fa-facebook m-0 p-0"></i>
+          <span> Ingresar con Facebook</span>
+        </button>
+        <button class="btn col-12 login-btn mt-2 mb-2 btn-primary"><i class="fab fa-twitter-square m-0 p-0"></i>
+          <span> Ingresar con Twitter</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

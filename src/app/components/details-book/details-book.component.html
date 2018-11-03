@@ -1,0 +1,32 @@
+<div id="books">
+  <div class="container mb-4">
+    <h2 class="text-center my-2"> Book Detail </h2>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 mx-auto">
+        <div class="card_book">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3 text-center">
+                  <p>
+                    <img class="img-fluid" src="{{ book.portada }}" alt="{{ book.titulo }}">
+                  </p>
+                </div>
+                <div class="col-md-9">
+                  <h4 routerLink="/books/{{book.id}}" class="card-title">{{ book.titulo }}</h4>
+                  <p class="card-text">
+                    {{ book.descripcion }}
+                  </p>
+                  <p><small>Idioma: {{ book.idioma }}</small></p>
+                  <p><small>Author: {{ book.autor }}</small></p>
+                  <p><small>Precio: {{ book.precio }}</small></p>
+                  <a href="{{ book.link_amazon }}" target="_blank" class="btn btn-block btn-outline-primary">Buy</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
