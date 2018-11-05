@@ -25,6 +25,15 @@ import { ModalComponent } from "./components/modal/modal.component";
 // pipe
 import { TruncateTextPipe } from "./pipes/truncate-text.pipe";
 
+//boostrap
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+
+// importamos spinner
+import { NgxSpinnerModule } from "ngx-spinner";
+
+// importamos paginacion
+import { NgxPaginationModule } from "ngx-pagination";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +50,15 @@ import { TruncateTextPipe } from "./pipes/truncate-text.pipe";
     ModalComponent,
     TruncateTextPipe
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    NgbModule,
+    NgxSpinnerModule,
+    NgxPaginationModule
+  ],
   providers: [DataApiService],
   bootstrap: [AppComponent]
 })

@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { DataApiService } from "src/app/services/data-api.service";
-import { Router } from "@angular/router";
 import { BookInterface } from "src/app/models/book-interface";
-import { NgForm } from "@angular/forms";
+import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-list-books",
@@ -10,11 +9,46 @@ import { NgForm } from "@angular/forms";
   styleUrls: ["./list-books.component.css"]
 })
 export class ListBooksComponent implements OnInit {
-  constructor(private dataApi: DataApiService, private router: Router) {}
+  constructor(
+    private dataApi: DataApiService,
+    private modalService: NgbModal
+  ) {}
+  currentpage: number = 1;
   private books: BookInterface[];
+
+  closeResult: string;
+  public rerender = false;
 
   ngOnInit() {
     this.getListBooks();
+  }
+
+  doRerender = () => {
+    this.getListBooks();
+  };
+
+  open(content) {
+    this.modalService
+      .open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" })
+      .result.then(
+        result => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        reason => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+    this.resetForm();
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return "by pressing ESC";
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return "by clicking on a backdrop";
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   getListBooks(): void {
@@ -31,7 +65,9 @@ export class ListBooksComponent implements OnInit {
       });
     }
   }
-  onPreUpdate(book: BookInterface) {
+
+  onPreUpdate(book: BookInterface, content: any) {
+    this.open(content);
     this.dataApi.selectedBook = Object.assign({}, book);
   }
 

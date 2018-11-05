@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, Input } from "@angular/core";
 import { DataApiService } from "src/app/services/data-api.service";
 import { BookInterface } from "../../models/book-interface";
 import { NgForm } from "@angular/forms";
-import { Location } from "@angular/common"; // para hacer refresh de la vista
 import { Router } from "@angular/router";
+import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-modal",
@@ -11,28 +11,50 @@ import { Router } from "@angular/router";
   styleUrls: ["./modal.component.css"]
 })
 export class ModalComponent implements OnInit {
+  @Input()
+  reload: Function;
+
+  closeResult: string;
   constructor(
     private dataApi: DataApiService,
-    private router: Router,
-    private location: Location
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {}
+
+  open(content) {
+    this.modalService
+      .open(content, { ariaLabelledBy: "modal-basic-title" })
+      .result.then(
+        result => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        reason => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return "by pressing ESC";
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return "by clicking on a backdrop";
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
   onSaveBook(bookForm: NgForm): void {
     if (bookForm.value.bookId == null) {
       //new
       this.dataApi.saveBook(bookForm.value).subscribe(
         (book: BookInterface) => {
-          //location.reload();
-          this.router.navigate(["/books/", book.id]);
-
-          // se remueve el background del modal para no refrescar pagina
-          let modal = document.getElementsByClassName("modal-backdrop")[0];
-          modal.parentNode.removeChild(modal);
-
-          let body = document.querySelector("body");
-          body.removeAttribute("class");
+          let element: HTMLElement = document.querySelector(
+            "ngb-modal-window"
+          ) as HTMLElement;
+          element.click();
+          this.reload();
         },
         error => console.log(error)
       );
@@ -40,19 +62,11 @@ export class ModalComponent implements OnInit {
       //update
       this.dataApi.updateBook(bookForm.value).subscribe(
         (book: BookInterface) => {
-          // modifica la Url
-          //this.location.go("/books/" + bookForm.value.bookId);
-          //console.log(this.location.path());
-          //location.reload();
-          $("#modalBook").modal("hide");
-          //this.location.go("/books/" + bookForm.value.bookId);
-          //this.router.navigate(["/books/" + bookForm.value.bookId]);
-          // se remueve el background del modal para no refrescar pagina
-          // let modal = document.getElementsByClassName("modal-backdrop")[0];
-          // modal.parentNode.removeChild(modal);
-
-          // let body = document.querySelector("body");
-          // body.removeAttribute("class");
+          let element: HTMLElement = document.querySelector(
+            "ngb-modal-window"
+          ) as HTMLElement;
+          element.click();
+          this.reload();
         },
         error => console.log(error)
       );

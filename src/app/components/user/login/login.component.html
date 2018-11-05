@@ -1,14 +1,18 @@
 <div class="container">
   <div class="row justify-content-center align-content-center ml-2 mr-2">
     <div class="col-md-6 mb-4 mt-5 pl-2 pr-2 pb-2 pt-2 login text-dark bg-light">
+      <ngb-alert *ngIf="!isError" (close)="isError=true">
+        <strong>Warning!</strong> Better check yourself, you're not looking too good.
+      </ngb-alert>
       <h1 class="text-center mt-2 mb-4">Ingreso</h1>
-      <form #formLogin="ngForm" (ngSubmit)="onLogin()">
+      <form #formLogin="ngForm" (ngSubmit)="onLogin(formLogin)">
         <div class="form-group">
-          <input [(ngModel)]="user.email" name="email" type="email" class="form-control" id="email" placeholder="Correo">
+          <input [(ngModel)]="user.email" name="email" type="email" class="form-control" id="email" placeholder="Correo"
+            required>
         </div>
         <div class="form-group">
           <input [(ngModel)]="user.password" name="password" type="password" class="form-control" id="password"
-            placeholder="Contraseña">
+            placeholder="Contraseña" required>
         </div>
         <div class="form-check">
           <input type="checkbox" class="form-check-input" id="recordarme">
